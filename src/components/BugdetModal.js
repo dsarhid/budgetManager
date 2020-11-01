@@ -1,26 +1,59 @@
 import React, {useState} from 'react';
-
-/*setBudgetValue es una props q envia Admin y que se modifica desde budget modal */
-/*Cuando se debe enviar parametros en una funcion se debe ejecutar usando un callback,
-sino la funcion que llama onclick se ejecuta cuando se renderiza el componente*/
+import {Button,Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from  'reactstrap';
 
 const BugdetModal = ({sendBudgetValue}) => {
+    //Define los props
     const [valueInput, setValueInput] = useState('');
-    const handleInput= (e)=> {
-    setValueInput(e.target.value);  
-    } 
+    const [state, setState] = useState({open:true});
 
-    const antonella = () => {
-        sendBudgetValue(valueInput)
-        setValueInput('')
+//Renderiza error
+    const renderError = () =>{
+alert("Solo puede ingresar numeros mayores a cero");
     }
 
-    return ( 
-    <> 
-        <label>Ingrese el presupuesto mensual</label>
-        <input type="text" value={valueInput} onChange={handleInput} />
-        <button onClick={antonella}>Enviar</button>
-    </>
+//Valida y Setea valor del input 
+    const handleInput= (e)=> {
+    const valueValide = e.target.value;
+    const onlyNumber = /^([0-9])*$/;
+    if(valueValide > 0 || onlyNumber.test(valueValide) )
+    {
+    setValueInput(e.target.value); }
+    else{
+    renderError();}
+    }
+
+   //Cierra modal cuando se ingresa monto en el input
+    const closeModal= () => {
+    if (state.open)
+    {
+        state.open=false;
+    }
+    }
+
+   //Envia valor del input a la pagina principal, limpia el input y cierra el modal
+    const sendBugInput = () => {
+        sendBudgetValue(valueInput);
+        setValueInput('');
+        closeModal();
+    }
+
+
+
+return ( 
+<>
+<Modal  className="colorModal" isOpen={state.open}>
+    <ModalHeader>
+    <Label className="text-danger">Ingrese el presupuesto mensual</Label>
+    </ModalHeader>
+    <ModalBody>
+    <Input className="inputColor" type="text" value={valueInput} onChange={handleInput} />
+    <Label id="messagge-error"className="small text-danger valideInputValue">Solo se pueden ingresar valores numericos mayores a cero</Label>
+    </ModalBody>
+    <ModalFooter>
+    <Button className="bg-danger" onClick={sendBugInput}>Enviar</Button>
+    </ModalFooter>
+</Modal>
+</>
     )
 }
 

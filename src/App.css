@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+/*Estilo modal de presupuesto*/
+.colorModal .modal-content {
+background-color: #282c34;
+}
+
+.inputColor .input-content{
+  background-color: #282c34;
+}
+
+.valideInputValue {
+  display: none;
+}
+.valideInputValue-active {
+  display: none;
+}
