@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {Button,Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from  'reactstrap';
 
 const BugdetModal = ({sendBudgetValue}) => {
-    //Define los props
+//Define los props
     const [valueInput, setValueInput] = useState('');
-    const [state, setState] = useState({open:true});
-
+    const [status, setStatus] = useState({open:true});
+    const [hasError, setHasError] = useState(false);
+    
 //Renderiza error
     const renderError = () =>{
-alert("Solo puede ingresar numeros mayores a cero");
+        setHasError(true)
     }
 
 //Valida y Setea valor del input 
@@ -17,20 +18,22 @@ alert("Solo puede ingresar numeros mayores a cero");
     const onlyNumber = /^([0-9])*$/;
     if(valueValide > 0 || onlyNumber.test(valueValide) )
     {
-    setValueInput(e.target.value); }
+    setValueInput(e.target.value);
+    setHasError(false) }
     else{
     renderError();}
     }
 
-   //Cierra modal cuando se ingresa monto en el input
+//Cierra modal cuando se ingresa monto en el input
     const closeModal= () => {
-    if (state.open)
+    if (status.open)
     {
-        state.open=false;
+        status.open=false;
     }
     }
+//Guarda en Local Storage
 
-   //Envia valor del input a la pagina principal, limpia el input y cierra el modal
+//Envia valor del input a la pagina principal, limpia el input y cierra el modal
     const sendBugInput = () => {
         sendBudgetValue(valueInput);
         setValueInput('');
@@ -41,13 +44,13 @@ alert("Solo puede ingresar numeros mayores a cero");
 
 return ( 
 <>
-<Modal  className="colorModal" isOpen={state.open}>
+<Modal  className="colorModal" isOpen={status.open}>
     <ModalHeader>
     <Label className="text-danger">Ingrese el presupuesto mensual</Label>
     </ModalHeader>
     <ModalBody>
     <Input className="inputColor" type="text" value={valueInput} onChange={handleInput} />
-    <Label id="messagge-error"className="small text-danger valideInputValue">Solo se pueden ingresar valores numericos mayores a cero</Label>
+    <Label className={`hasError${hasError ? '-active' : ''}`}>Solo se pueden ingresar valores numericos mayores a cero</Label>
     </ModalBody>
     <ModalFooter>
     <Button className="bg-danger" onClick={sendBugInput}>Enviar</Button>

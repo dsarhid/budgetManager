@@ -45,9 +45,12 @@ background-color: #282c34;
   background-color: #282c34;
 }
 
-.valideInputValue {
+.hasError {
   display: none;
 }
-.valideInputValue-active {
-  display: none;
+.hasError-active {
+  display: block;
+  color: red;
+  font-size: small;
+  font-style: italic;
 }
