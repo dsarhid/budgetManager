@@ -1,0 +1,9 @@
+{
+    "gastos": [
+      {
+        "name": "Notebook",
+        "value": 5000,
+        "id": 1
+      }
+    ]
+  }
