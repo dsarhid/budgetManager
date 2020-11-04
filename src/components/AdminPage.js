@@ -5,6 +5,7 @@ import FormList from './FormList';
 import {Col, Row} from  'reactstrap';
 
 
+
 const AdminPage = () => {
 
     /*Definiendo estado y modificador de estado: bugdetValue*/

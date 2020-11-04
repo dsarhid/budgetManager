@@ -50,6 +50,16 @@ const BugdetModal = ({sendBudgetValue}) => {
         sendBudgetValue(valueInput);
         closeModal();
     }
+//Guarda en Local Storage
+
+//Envia valor del input a la pagina principal, limpia el input y cierra el modal
+    const sendBugInput = () => {
+        sendBudgetValue(valueInput);
+        setValueInput('');
+        closeModal();
+    }
+
+
 
 return ( 
 <>
