@@ -22,13 +22,12 @@ const FormList = ( ) => {
 
       return (
         <>
-        <h3>Lista de gastos</h3>
+        <h2>Lista de gastos</h2>
             <div> 
             {
               listaLs.map((l) => {
                 return (
-                    <Card color="dark">
-                        
+                    <Card color="dark">  
                         <CardBody className="p-2 my-1 border border-light">
                             <div>
                                 Nombre: {l.nameInput}

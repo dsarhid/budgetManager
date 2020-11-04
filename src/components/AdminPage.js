@@ -5,23 +5,62 @@ import FormList from './FormList';
 import {Col, Row} from  'reactstrap';
 
 
-
 const AdminPage = () => {
 
     /*Definiendo estado y modificador de estado: bugdetValue*/
-    const [budgetValue, setBudgetValue] = useState(0);
-    const [gasto, setGasto] = useState(0);
-    const [nombre, setNombre] = useState(0);
+    const [budgetValue, setBudgetValue] = useState(localStorage.getItem("presupuesto") || 0);
+    const [valueInput, setValueInput] = useState(0);
+    const [colorMensual, setColorMensual] = useState('');
+    const [colorActual, setColorActual] = useState('');
 
-    // {`${budgetValue<100 ? 'p-100' : 'p-500'}`}
+    let resta = (localStorage.getItem("resta"));
+    resta = (resta - valueInput);
+    let resultado = (budgetValue - (resta)*-1);
+    
 
+    useEffect(() => {
+        localStorage.setItem("resta", (resta));
+      });
+
+    // Renderizado de colores
+    useEffect(() => {
+        if(budgetValue>=500){
+            setColorMensual('Green');
+        }
+        else{
+            if(budgetValue>=100){
+                setColorMensual('Yellow');
+            }
+            else{
+                setColorMensual('Red');
+            }
+        }
+    });
+
+    useEffect(() => {
+        if(resultado>=500){
+            setColorActual("Green");
+        }
+        else{
+            if(resultado>=100){
+                setColorActual("Yellow");
+            }
+            else{
+                setColorActual("Red");
+            }
+        }
+    });
+    
+
+    console.log(budgetValue);
     return ( 
     <>
-        <p>Presupuesto: ${budgetValue}</p>
-        <BugdetModal close={setBudgetValue} sendBudgetValue={setBudgetValue}/>
+        <p style={{color: colorMensual}}>Presupuesto Mensual: ${budgetValue}</p>
+        <p style={{color: colorActual}}>Presupuesto Restante: ${resultado}</p>
+        <BugdetModal sendBudgetValue={setBudgetValue} budgetValue={budgetValue}/>
         <Row>
                 <Col md={6} className="px-1">
-                    <FormInput sendValueInput={ setGasto } sendNameInput={ setNombre }/>
+                    <FormInput sendValueInput={ setValueInput } />
                 </Col>
                 <Col md={6} className="px-1">
                     <FormList/>

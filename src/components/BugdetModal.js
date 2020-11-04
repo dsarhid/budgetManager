@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {Button,Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from  'reactstrap';
 
-const BugdetModal = ({sendBudgetValue}) => {
+const BugdetModal = ({sendBudgetValue, budgetValue}) => {
 //Define los props
-    const [valueInput, setValueInput] = useState('');
+    const [valueInput, setValueInput] = useState();
     const [status, setStatus] = useState({open:true});
     const [hasError, setHasError] = useState(false);
-    const [color, setColor] = useState('');
+    const [modal, setModal] = useState(budgetValue === 0);
+    
+    
 
     useEffect(() => {
         const data = localStorage.getItem("presupuesto");
@@ -34,8 +36,10 @@ const BugdetModal = ({sendBudgetValue}) => {
     setHasError(false) }
     
     else{
-    renderError();}
+    renderError();
     }
+    }
+    
 
 //Cierra modal cuando se ingresa monto en el input
     const closeModal= () => {
@@ -43,23 +47,12 @@ const BugdetModal = ({sendBudgetValue}) => {
                 status.open=false;
         }
     }
-//Guarda en Local Storage
 
 //Envia valor del input a la pagina principal y cierra el modal
     const sendBugInput = () => {
         sendBudgetValue(valueInput);
         closeModal();
     }
-//Guarda en Local Storage
-
-//Envia valor del input a la pagina principal, limpia el input y cierra el modal
-    const sendBugInput = () => {
-        sendBudgetValue(valueInput);
-        setValueInput('');
-        closeModal();
-    }
-
-
 
 return ( 
 <>

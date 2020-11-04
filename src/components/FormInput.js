@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const FormInput = ({ sendValueInput, sendNameInput }) => {
-    const [nameInput, setNameInput] = useState('');
-    const [valueInput, setValueInput] = useState('');
+const FormInput = ({ sendValueInput }) => {
+    const [nameInput, setNameInput] = useState();
+    const [valueInput, setValueInput] = useState();
     const [hasError, setHasError] = useState(false);
     const data = { nameInput, valueInput }
       
@@ -21,7 +21,8 @@ const FormInput = ({ sendValueInput, sendNameInput }) => {
         let lista;
         lista = getListaFromLS();
         lista.push(data);
-        localStorage.setItem('Lista', JSON.stringify(lista));  
+        localStorage.setItem('Lista', JSON.stringify(lista));
+        
     }
 
 //Renderiza error
@@ -41,19 +42,14 @@ const FormInput = ({ sendValueInput, sendNameInput }) => {
         renderError();}
     }
 
-    //Envia valor del input a la pagina principal, limpia el input y cierra el modal
+    //Envia valor del input a la pagina principal
     const sendInputForms = () => {
         sendValueInput(valueInput);
-        sendNameInput(nameInput);
-        /*setValueInput('');
-        setNameInput('');*/
     }
-
-    
 
     return (
         <>
-        <h3>Ingresar gasto</h3>
+        <h2>Ingresar gasto</h2>
             <div className="border border-light p-4 mt-3 mx-4">
                     <form onSubmit = {handleSubmit}>
                         <label>Ingrese el nombre del gasto:</label>
@@ -62,6 +58,7 @@ const FormInput = ({ sendValueInput, sendNameInput }) => {
                                 type="text"
                                 placeholder="Nombre"
                                 value={nameInput}
+                                className="col-12"
                                 required
                                 onChange = {(e) => setNameInput(e.target.value)}
                             />
@@ -72,6 +69,7 @@ const FormInput = ({ sendValueInput, sendNameInput }) => {
                                 type="text"
                                 placeholder="Monto"
                                 value={valueInput}
+                                className="col-12"
                                 required
                                 onChange = {handleInput}
                             />
